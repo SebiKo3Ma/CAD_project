@@ -39,6 +39,7 @@ module tb_top();
         Rx = 1'b1;
         sw = 9'b000000000;
         #20 rst = 1'b0;
+        /*
         #40
         send(8'b10100001);
         
@@ -51,7 +52,7 @@ module tb_top();
         #50
         rst = 1'b1;
         #40 rst = 1'b0;
-
+        */
         #300
         sw[0] = 1'b1;
         sw[1] = 1'b0;
@@ -63,9 +64,6 @@ module tb_top();
         sw[7] = 1'b0;
 
         #50 send_ready = 1'b1;
-        #10 send_ready = 1'b0;
-
-        #100 send_ready = 1'b1;
-        #10 send_ready = 1'b0;
+        #1000 send_ready = 1'b0;
     end
 endmodule

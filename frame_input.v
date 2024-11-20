@@ -2,6 +2,7 @@
 module frame_input(input clk, rst, send_ready, input[8:0] sw, output[8:0] frame_to_transmit, output send);
     reg[8:0] frame_ff, frame_nxt;
     reg send_check_ff, send_check_nxt, send_ff, send_nxt;
+    reg[4:0] count_ff, count_nxt;
 
     assign send = send_ff;
     assign frame_to_transmit = frame_ff;    
@@ -19,13 +20,15 @@ module frame_input(input clk, rst, send_ready, input[8:0] sw, output[8:0] frame_
 
         send_nxt = send_ff;
         send_check_nxt = send_check_ff;
+        count_nxt = count_ff + 1;
 
         if(send_ready && !send_check_ff) begin
             send_nxt = 1'b1;
             send_check_nxt = 1'b1;
+            count_nxt = 5'b00001;
         end
 
-        if(send_check_ff) begin
+        if(send_check_ff && count_ff == 5'b11001) begin
             send_nxt = 1'b0;
         end
 
@@ -39,10 +42,12 @@ module frame_input(input clk, rst, send_ready, input[8:0] sw, output[8:0] frame_
             send_ff <= 1'b0;
             send_check_ff <= 1'b0;
             frame_ff <= 9'b000000000;
+            count_ff <= 1'b0;
         end else begin
             send_ff <= send_nxt;
             send_check_ff <= send_check_nxt;
             frame_ff <= frame_nxt;
+            count_ff <= count_nxt;
         end
     end
 endmodule

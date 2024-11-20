@@ -39,7 +39,7 @@ module UART_transmitter(input clk, rst, send, parity, parity_type, stop_bits,
                 Tx_nxt = frame_to_transmit[count_ff];
                 count_nxt = count_ff + 1;
 
-                if(count_ff == frame_length) begin
+                if(count_ff == frame_length - 1) begin
                     if(parity) begin
                         state_nxt = PARITY;
                     end else begin
@@ -90,6 +90,7 @@ module UART_transmitter(input clk, rst, send, parity, parity_type, stop_bits,
                         end
                     end
                 endcase
+                state_nxt = STOP;
             end
 
             STOP: begin
