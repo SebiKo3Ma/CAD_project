@@ -148,10 +148,10 @@ module tb_top();
 
         // send default frame
         #300
-        sw[0] = 1'b1;
-        sw[1] = 1'b0;
-        sw[2] = 1'b1;
-        sw[3] = 1'b0;
+        sw[0] = 1'b0;
+        sw[1] = 1'b1;
+        sw[2] = 1'b0;
+        sw[3] = 1'b1;
         sw[4] = 1'b1;
         sw[5] = 1'b0;
         sw[6] = 1'b1;
@@ -172,7 +172,7 @@ module tb_top();
         #1000 send_ready = 1'b0;
 
         //hard reset
-        #40 rst = 1'b1;
+        #4000 rst = 1'b1;
         #40 rst = 1'b0;
 
         //change frame lenght to 6
@@ -201,7 +201,7 @@ module tb_top();
         #1000 send_ready = 1'b0;
 
         //hard reset
-        #40 rst = 1'b1;
+        #4000 rst = 1'b1;
         #40 rst = 1'b0;
 
         //change parity to odd
@@ -216,7 +216,7 @@ module tb_top();
         #1000 send_ready = 1'b0;
 
         //hard reset
-        #40 rst = 1'b1;
+        #4000 rst = 1'b1;
         #40 rst = 1'b0;
 
         //change stop bits to 2
@@ -232,7 +232,7 @@ module tb_top();
         #1000 send_ready = 1'b0;
 
         //hard 
-        #40 rst = 1'b1;
+        #4000 rst = 1'b1;
         #40 rst = 1'b0;
 
         //view register values
@@ -250,5 +250,8 @@ module tb_top();
 
         //frame length
         #400 receive(8'b11001111);
+
+        //invalid register
+        #400 receive(8'b00101111);
     end
 endmodule
