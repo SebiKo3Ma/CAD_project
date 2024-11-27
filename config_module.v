@@ -45,7 +45,9 @@ module config_module(input clk, rst, input[7:0] frame, input frame_valid, ack, o
                     state_nxt = ACK;
                 end else if(count_ff == 3'b111) begin
                     valid_nxt = 1'b0;
-                    fault_nxt = 1'b1;
+                    if(address_ff != 4'b0011) begin
+                        fault_nxt = 1'b1;
+                    end
                     state_nxt = WAIT;
                 end
             end
